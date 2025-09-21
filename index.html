@@ -74,7 +74,10 @@
       cursor:pointer;
       transition:all .25s ease;
     }
-    button.link-btn.clicked{background:#ffcc00;color:#000}
+    button.link-btn.clicked{
+      background:#ffcc00;
+      color:#000;
+    }
 
     .special{
       width:100%;
@@ -101,7 +104,6 @@
 <body>
 
   <div class="card">
-    <!-- ✅ Tumhara diya hua image link -->
     <img src="https://i.ibb.co/gb95C6GS/IMG-20250921-195703-475.jpg" alt="Logo" class="logo">
 
     <h1>Join My Channels</h1>
@@ -129,13 +131,13 @@
   </div>
 
   <script>
-    // sab buttons select karo
     const linkBtns = document.querySelectorAll('.link-btn');
     const special = document.querySelector('.special');
 
     linkBtns.forEach(btn=>{
       btn.addEventListener('click',()=>{
-        btn.classList.toggle('clicked');     // rang badlo
+        btn.classList.add('clicked');        // rang badlo
+        btn.textContent = "✅ Joined";       // text badlo
         window.open(btn.dataset.url,'_blank'); // link open karo
       });
     });
