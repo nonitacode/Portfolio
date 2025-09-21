@@ -105,12 +105,14 @@
 </head>
 <body>
 
+  <!-- Profile -->
   <img src="https://i.ibb.co/F45xCN9N/Img2url-bot.jpg" alt="Profile" class="profile-pic">
   <p class="description">
     Welcome! I'm <strong>Rudra</strong>, a developer & content creator.<br>
     Explore my work and join all my channels!
   </p>
 
+  <!-- 6 Buttons -->
   <div class="grid">
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-telegram"></i>Button 1</a>
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-instagram"></i>Button 2</a>
@@ -120,6 +122,7 @@
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fas fa-link"></i>Button 6</a>
   </div>
 
+  <!-- Bottom red button -->
   <div class="bottom-link">
     <a href="https://t.me/Kenkaneki7678" target="_blank">
       Join My Telegram Channel
@@ -133,7 +136,9 @@
   <script>
     document.querySelectorAll('.btn').forEach(btn=>{
       btn.addEventListener('click',function(e){
-        e.preventDefault(); // animation ke liye link open mat karo
+        e.preventDefault();  // animation ke liye rok lo
+        const href = this.getAttribute('href');
+
         this.innerHTML = '<i class="fas fa-check"></i> Joined!';
         this.classList.add('clicked');
 
@@ -142,8 +147,11 @@
         this.appendChild(fire);
 
         setTimeout(()=>fire.remove(),600);
+        // 0.5 sec ke baad link open
+        setTimeout(()=>{ window.open(href,'_blank'); },500);
       });
     });
   </script>
+
 </body>
 </html>
