@@ -42,54 +42,66 @@
       margin-bottom:1.5rem;
     }
     .btn{
+      position:relative;
       display:flex;
       align-items:center;
       justify-content:center;
       padding:1rem;
       font-size:1.05rem;
       font-weight:600;
-      background:#ffffff;        /* white */
-      color:#000000;             /* black text */
+      background:#ffffff;
+      color:#000000;
       text-decoration:none;
       border-radius:10px;
       border:1px solid #ccc;
       transition:background .3s,color .3s,transform .2s;
+      overflow:hidden;
     }
     .btn i{margin-right:10px;}
-    .btn:hover,
-    .btn:active{
-      background:#ffeb3b;       /* yellow on hover/click */
+    .btn:hover{background:#ffeb3b;}
+    .btn.clicked{
+      background:#ffeb3b;
       color:#000;
-      transform:scale(1.02);
     }
-    .bottom-link{
-      text-align:center;
-      margin-bottom:2rem;
+
+    /* Fire/signal animation */
+    .fire {
+      position:absolute;
+      top:-10px;
+      left:50%;
+      transform:translateX(-50%);
+      width:0;
+      height:0;
+      border-left:10px solid transparent;
+      border-right:10px solid transparent;
+      border-bottom:20px solid orange;
+      opacity:0;
+      animation:fire 0.6s ease forwards;
     }
+    @keyframes fire{
+      0%{opacity:0; transform:translateX(-50%) scale(0.5);}
+      50%{opacity:1; transform:translateX(-50%) scale(1.2);}
+      100%{opacity:0; transform:translateX(-50%) scale(0.8);}
+    }
+
+    .bottom-link{text-align:center;margin-bottom:2rem;}
     .bottom-link a{
       display:inline-block;
       padding:0.9rem 2rem;
-      background:#ff3333;       /* red */
+      background:#ff3333;
       color:#fff;
       font-weight:600;
       text-decoration:none;
       border-radius:8px;
       transition:background .3s,color .3s;
     }
-    .bottom-link a:hover,
-    .bottom-link a:active{
-      background:#ffffff;       /* white on click */
-      color:#000;
-    }
+    .bottom-link a:hover{background:#ffffff;color:#000;}
     footer{
       font-size:0.85rem;
       color:#999;
       text-align:center;
     }
-    footer a{
-      color:#ffeb3b;
-      text-decoration:none;
-    }
+    footer a{color:#ffeb3b;text-decoration:none;}
     footer a:hover{text-decoration:underline;}
   </style>
 </head>
@@ -102,7 +114,7 @@
     Explore my work and join all my channels!
   </p>
 
-  <!-- 6 Buttons (2 x 3 grid) -->
+  <!-- 6 Buttons -->
   <div class="grid">
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-telegram"></i>Button 1</a>
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-instagram"></i>Button 2</a>
@@ -124,5 +136,21 @@
     Made by <a href="https://t.me/Kenkaneki7678" target="_blank">Rudra</a>
   </footer>
 
+  <script>
+    // Button click event
+    document.querySelectorAll('.btn').forEach(btn=>{
+      btn.addEventListener('click', function(e){
+        e.preventDefault(); // prevent link just for demo
+        // text change
+        this.innerHTML = '<i class="fas fa-check"></i> Joined!';
+        this.classList.add('clicked');
+        // add fire effect
+        const fire = document.createElement('div');
+        fire.classList.add('fire');
+        this.appendChild(fire);
+        setTimeout(()=>fire.remove(),600);
+      });
+    });
+  </script>
 </body>
 </html>
