@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile with Buttons</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Mobile Number Validation</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body{
@@ -33,71 +32,56 @@
       margin-bottom:2rem;
       text-align:center;
     }
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:1rem;
+    .form-box{
+      background:#1a1a1a;
+      padding:2rem;
+      border-radius:12px;
+      max-width:400px;
       width:100%;
-      max-width:600px;
-      margin-bottom:1.5rem;
+      box-shadow:0 0 10px rgba(0,0,0,0.3);
     }
-    .btn{
-      position:relative;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:1rem;
-      font-size:1.05rem;
+    label{
+      display:block;
+      margin-bottom:0.5rem;
       font-weight:600;
-      background:#ffffff;
-      color:#000000;
-      text-decoration:none;
-      border-radius:10px;
+    }
+    input{
+      width:100%;
+      padding:0.8rem;
+      font-size:1rem;
+      border-radius:8px;
       border:1px solid #ccc;
-      transition:background .3s,color .3s,transform .2s;
-      overflow:hidden;
+      outline:none;
+      margin-bottom:1rem;
     }
-    .btn i{margin-right:10px;}
-    .btn:hover{background:#ffeb3b;}
-    .btn.clicked{
-      background:#ffeb3b;
-      color:#000;
-    }
-    /* Fire animation */
-    .fire {
-      position:absolute;
-      top:-12px;
-      left:50%;
-      transform:translateX(-50%);
-      width:0;
-      height:0;
-      border-left:10px solid transparent;
-      border-right:10px solid transparent;
-      border-bottom:20px solid orange;
-      opacity:0;
-      animation:fire 0.6s ease forwards;
-    }
-    @keyframes fire{
-      0%{opacity:0;transform:translateX(-50%) scale(0.5);}
-      50%{opacity:1;transform:translateX(-50%) scale(1.2);}
-      100%{opacity:0;transform:translateX(-50%) scale(0.8);}
-    }
-    .bottom-link{text-align:center;margin-bottom:2rem;}
-    .bottom-link a{
-      display:inline-block;
-      padding:0.9rem 2rem;
+    button{
+      width:100%;
+      padding:0.9rem;
+      font-size:1rem;
+      font-weight:600;
       background:#ff3333;
       color:#fff;
-      font-weight:600;
-      text-decoration:none;
+      border:none;
       border-radius:8px;
-      transition:background .3s,color .3s;
+      cursor:pointer;
+      transition:background .3s;
     }
-    .bottom-link a:hover{background:#ffffff;color:#000;}
+    button:hover{background:#fff;color:#000;}
+    .message{
+      margin-top:1rem;
+      font-size:0.95rem;
+      text-align:center;
+      padding:0.5rem;
+      border-radius:6px;
+      display:none;
+    }
+    .error{background:#ff4d4d;color:#fff;}
+    .success{background:#4caf50;color:#fff;}
     footer{
       font-size:0.85rem;
       color:#999;
       text-align:center;
+      margin-top:2rem;
     }
     footer a{color:#ffeb3b;text-decoration:none;}
     footer a:hover{text-decoration:underline;}
@@ -105,28 +89,17 @@
 </head>
 <body>
 
-  <!-- Profile -->
   <img src="https://i.ibb.co/F45xCN9N/Img2url-bot.jpg" alt="Profile" class="profile-pic">
   <p class="description">
     Welcome! I'm <strong>Rudra</strong>, a developer & content creator.<br>
-    Explore my work and join all my channels!
+    Enter your Indian mobile number below.
   </p>
 
-  <!-- 6 Buttons -->
-  <div class="grid">
-    <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-telegram"></i>Button 1</a>
-    <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-instagram"></i>Button 2</a>
-    <a href="https://t.me/Kenkaneki7678" class="btn"><i class="far fa-file-alt"></i>Button 3</a>
-    <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-github"></i>Button 4</a>
-    <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-youtube"></i>Button 5</a>
-    <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fas fa-link"></i>Button 6</a>
-  </div>
-
-  <!-- Bottom red button -->
-  <div class="bottom-link">
-    <a href="https://t.me/Kenkaneki7678" target="_blank">
-      Join My Telegram Channel
-    </a>
+  <div class="form-box">
+    <label for="mobile">Enter Your Mobile Number</label>
+    <input type="tel" id="mobile" placeholder="10 digit number" maxlength="10">
+    <button id="submit">Submit</button>
+    <div id="msg" class="message"></div>
   </div>
 
   <footer>
@@ -134,24 +107,23 @@
   </footer>
 
   <script>
-    document.querySelectorAll('.btn').forEach(btn=>{
-      btn.addEventListener('click',function(e){
-        e.preventDefault();  // animation ke liye rok lo
-        const href = this.getAttribute('href');
+    const mobileInput = document.getElementById('mobile');
+    const submitBtn = document.getElementById('submit');
+    const msg = document.getElementById('msg');
 
-        this.innerHTML = '<i class="fas fa-check"></i> Joined!';
-        this.classList.add('clicked');
+    submitBtn.addEventListener('click', function(){
+      const value = mobileInput.value.trim();
 
-        const fire = document.createElement('div');
-        fire.classList.add('fire');
-        this.appendChild(fire);
-
-        setTimeout(()=>fire.remove(),600);
-        // 0.5 sec ke baad link open
-        setTimeout(()=>{ window.open(href,'_blank'); },500);
-      });
+      if(!/^[0-9]{10}$/.test(value)){
+        msg.textContent = "Number galat hai! 10 digit ka valid Indian number dijiye.";
+        msg.className = "message error";
+        msg.style.display = "block";
+      } else {
+        msg.textContent = "🎉 Congratulations! Wait for 24 hours, your recharge will be done.";
+        msg.className = "message success";
+        msg.style.display = "block";
+      }
     });
   </script>
-
 </body>
 </html>
