@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recharge Demo</title>
+<title>Recharge Celebration</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
   body{
@@ -13,16 +13,13 @@
     background:linear-gradient(135deg,#ff5f6d,#ffc371,#4b6cb7,#182848);
     background-size:600% 600%;
     animation:gradient 18s ease infinite;
-    display:flex;justify-content:center;align-items:center;
-    height:100vh;color:#fff;overflow:hidden;
+    color:#fff;overflow:hidden;
   }
   @keyframes gradient{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
   }
-
-  /* Loader */
   #loader{
     position:fixed;top:0;left:0;width:100%;height:100%;
     background:#111;display:flex;justify-content:center;align-items:center;
@@ -35,9 +32,8 @@
   }
   @keyframes spin{to{transform:rotate(360deg);}}
   #loader p{margin-top:1rem;color:#ccc;}
-
   .card{
-    position:relative;
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     max-width:400px;width:90%;
     padding:2rem 1.5rem;
     background:rgba(255,255,255,0.08);
@@ -45,10 +41,9 @@
     border-radius:20px;
     text-align:center;
     box-shadow:0 0 20px rgba(0,0,0,0.4);
-    opacity:0;transform:translateY(40px);
-    transition:all 1s ease;
+    transition:opacity 0.8s,transform 0.8s;
   }
-  .card.show{opacity:1;transform:translateY(0);}
+  .hide{opacity:0;pointer-events:none;}
   .profile{
     width:120px;height:120px;border-radius:50%;
     object-fit:cover;
@@ -56,7 +51,6 @@
     box-shadow:0 0 15px rgba(255,255,255,0.5);
   }
   .desc{font-size:1rem;margin-bottom:1.5rem;color:#eee;}
-
   .input-wrap{
     display:flex;align-items:center;
     background:rgba(255,255,255,0.1);
@@ -71,56 +65,25 @@
   }
   input{
     flex:1;border:none;background:transparent;color:#fff;
-    padding:0.8rem;font-size:1rem;outline:none;
-    min-width:0; /* fix overflow */
+    padding:0.8rem;font-size:1rem;outline:none;min-width:0;
   }
-
   button{
-    position:relative;
-    width:100%;
-    padding:0.9rem;font-size:1rem;
-    background:#ff3333;color:#fff;
-    border:none;border-radius:8px;
-    overflow:hidden;cursor:pointer;
-    font-weight:600;
+    position:relative;width:100%;padding:0.9rem;font-size:1rem;
+    background:#ff3333;color:#fff;border:none;border-radius:8px;
+    overflow:hidden;cursor:pointer;font-weight:600;
     transition:transform .2s;
   }
-  button::after{
-    content:"";
-    position:absolute;
-    width:5px;height:5px;
-    background:rgba(255,255,255,0.6);
-    border-radius:50%;transform:scale(0);
-    pointer-events:none;
+  button:active{transform:scale(0.96);}
+  #result{
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    background:#111;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;
+    padding:2rem;opacity:0;pointer-events:none;
+    transition:opacity 0.6s;
   }
-  button:active::after{transform:scale(20);opacity:0;transition:transform 0.6s,opacity 0.6s;}
-  button:active{transform:scale(0.97);}
-
-  .toast{
-    position:absolute;bottom:-60px;left:50%;
-    transform:translateX(-50%);
-    background:#333;padding:0.6rem 1rem;border-radius:6px;
-    font-size:0.9rem;display:none;
-  }
-  .toast.show{display:block;animation:fade .4s;}
-  @keyframes fade{
-    from{opacity:0;transform:translate(-50%,10px);}
-    to{opacity:1;transform:translate(-50%,0);}
-  }
-  .success{background:#4caf50;}
-  .error{background:#ff4d4d;}
-
-  footer{
-    position:absolute;bottom:20px;font-size:0.9rem;color:#eee;
-    display:flex;align-items:center;gap:10px;
-  }
-  footer a{color:#ffeb3b;text-decoration:none;font-weight:600;}
-  .insta{
-    font-size:1.3rem;
-    background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
+  #result.show{opacity:1;pointer-events:auto;}
+  #result h1{font-size:2rem;margin-bottom:1rem;color:#ffeb3b;}
+  #result p{font-size:1.2rem;max-width:600px;color:#eee;}
 </style>
 </head>
 <body>
@@ -130,51 +93,54 @@
   <p>Loading...</p>
 </div>
 
-<div class="card" id="mainCard">
+<div id="mainCard" class="card">
   <img src="https://i.ibb.co/F45xCN9N/Img2url-bot.jpg" class="profile" alt="profile">
-  <p class="desc">
-    Welcome! Enter your Indian mobile number below to see validation & toast messages.
-  </p>
-
+  <p class="desc">Welcome! Enter your Indian mobile number below to test celebration effect.</p>
   <div class="input-wrap">
     <div class="prefix">🇮🇳 +91</div>
     <input type="tel" id="mobile" placeholder="10 digit number" maxlength="10">
   </div>
-
   <button id="submitBtn">Submit</button>
-  <div id="toast" class="toast"></div>
 </div>
 
-<footer>
-  <i class="fab fa-instagram insta"></i>
-  <a href="https://instagram.com/Eternal.rudra" target="_blank">Instagram</a>
-  | Made with ❤️ by <a href="https://t.me/Kenkaneki7678" target="_blank">Rudra</a>
-</footer>
+<div id="result">
+  <h1>🎉 Congratulations!</h1>
+  <p>Your number has been submitted successfully.<br>
+  Enjoy the celebration animation!</p>
+</div>
+
+<audio id="sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_9baf59eced.mp3" preload="auto"></audio>
 
 <script>
+  // Loader hide after 3s
   window.addEventListener('load',()=>{
-    setTimeout(()=>{
-      document.getElementById('loader').style.display='none';
-      document.getElementById('mainCard').classList.add('show');
-    },3000);
+    setTimeout(()=>document.getElementById('loader').style.display='none',3000);
   });
 
   const btn=document.getElementById('submitBtn');
   const input=document.getElementById('mobile');
-  const toast=document.getElementById('toast');
+  const card=document.getElementById('mainCard');
+  const result=document.getElementById('result');
+  const sound=document.getElementById('sound');
 
   btn.addEventListener('click',()=>{
     const val=input.value.trim();
-    if(!/^[0-9]{10}$/.test(val)){
-      toast.textContent='❌ Invalid! Please enter a valid 10 digit number.';
-      toast.className='toast error show';
+    if(/^[0-9]{10}$/.test(val)){
+      card.classList.add('hide');
+      result.classList.add('show');
+      sound.currentTime=0; sound.play();
+
+      // Fire confetti
+      let duration=4*1000;
+      let end=Date.now()+duration;
+      (function frame(){
+        confetti({particleCount:5,spread:70,origin:{y:0.6}});
+        if(Date.now()<end){requestAnimationFrame(frame);}
+      }());
     }else{
-      toast.textContent='✅ Congratulations! Wait 24 hrs for your recharge.';
-      toast.className='toast success show';
+      alert("❌ Invalid! Please enter a valid 10 digit number.");
     }
-    setTimeout(()=>toast.classList.remove('show'),3000);
   });
 </script>
-
 </body>
 </html>
