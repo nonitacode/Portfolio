@@ -63,11 +63,10 @@
       background:#ffeb3b;
       color:#000;
     }
-
-    /* Fire/signal animation */
+    /* Fire animation */
     .fire {
       position:absolute;
-      top:-10px;
+      top:-12px;
       left:50%;
       transform:translateX(-50%);
       width:0;
@@ -79,11 +78,10 @@
       animation:fire 0.6s ease forwards;
     }
     @keyframes fire{
-      0%{opacity:0; transform:translateX(-50%) scale(0.5);}
-      50%{opacity:1; transform:translateX(-50%) scale(1.2);}
-      100%{opacity:0; transform:translateX(-50%) scale(0.8);}
+      0%{opacity:0;transform:translateX(-50%) scale(0.5);}
+      50%{opacity:1;transform:translateX(-50%) scale(1.2);}
+      100%{opacity:0;transform:translateX(-50%) scale(0.8);}
     }
-
     .bottom-link{text-align:center;margin-bottom:2rem;}
     .bottom-link a{
       display:inline-block;
@@ -107,14 +105,12 @@
 </head>
 <body>
 
-  <!-- Profile -->
   <img src="https://i.ibb.co/F45xCN9N/Img2url-bot.jpg" alt="Profile" class="profile-pic">
   <p class="description">
     Welcome! I'm <strong>Rudra</strong>, a developer & content creator.<br>
     Explore my work and join all my channels!
   </p>
 
-  <!-- 6 Buttons -->
   <div class="grid">
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-telegram"></i>Button 1</a>
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-instagram"></i>Button 2</a>
@@ -124,30 +120,27 @@
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fas fa-link"></i>Button 6</a>
   </div>
 
-  <!-- Bottom red button -->
   <div class="bottom-link">
     <a href="https://t.me/Kenkaneki7678" target="_blank">
       Join My Telegram Channel
     </a>
   </div>
 
-  <!-- Footer -->
   <footer>
     Made by <a href="https://t.me/Kenkaneki7678" target="_blank">Rudra</a>
   </footer>
 
   <script>
-    // Button click event
     document.querySelectorAll('.btn').forEach(btn=>{
-      btn.addEventListener('click', function(e){
-        e.preventDefault(); // prevent link just for demo
-        // text change
+      btn.addEventListener('click',function(e){
+        e.preventDefault(); // animation ke liye link open mat karo
         this.innerHTML = '<i class="fas fa-check"></i> Joined!';
         this.classList.add('clicked');
-        // add fire effect
+
         const fire = document.createElement('div');
         fire.classList.add('fire');
         this.appendChild(fire);
+
         setTimeout(()=>fire.remove(),600);
       });
     });
