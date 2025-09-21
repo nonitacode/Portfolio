@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buttons Layout</title>
+  <title>Profile with Buttons</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -11,29 +11,45 @@
       margin:0;
       font-family:'Poppins',sans-serif;
       background:#0f0f0f;
+      color:#fff;
       display:flex;
-      justify-content:center;
+      flex-direction:column;
       align-items:center;
       min-height:100vh;
+      padding:2rem 1rem;
     }
-    .container{
-      width:90%;
-      max-width:600px;
+    .profile-pic{
+      width:150px;
+      height:150px;
+      border-radius:50%;
+      object-fit:cover;
+      border:4px solid #fff;
+      margin-bottom:1rem;
+    }
+    .description{
+      font-size:1rem;
+      max-width:500px;
+      color:#e0e0e0;
+      margin-bottom:2rem;
+      text-align:center;
     }
     .grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:1rem;
+      width:100%;
+      max-width:600px;
+      margin-bottom:1.5rem;
     }
     .btn{
       display:flex;
       align-items:center;
       justify-content:center;
       padding:1rem;
-      font-size:1.1rem;
+      font-size:1.05rem;
       font-weight:600;
-      background:#ffffff;     /* White background */
-      color:#000000;          /* Black text */
+      background:#ffffff;        /* white */
+      color:#000000;             /* black text */
       text-decoration:none;
       border-radius:10px;
       border:1px solid #ccc;
@@ -42,34 +58,51 @@
     .btn i{margin-right:10px;}
     .btn:hover,
     .btn:active{
-      background:#ffeb3b;   /* Yellow on hover/click */
+      background:#ffeb3b;       /* yellow on hover/click */
       color:#000;
       transform:scale(1.02);
     }
     .bottom-link{
-      margin-top:1.5rem;
       text-align:center;
+      margin-bottom:2rem;
     }
     .bottom-link a{
       display:inline-block;
       padding:0.9rem 2rem;
-      background:#ff3333;     /* Red button */
+      background:#ff3333;       /* red */
       color:#fff;
+      font-weight:600;
       text-decoration:none;
       border-radius:8px;
-      font-weight:600;
       transition:background .3s,color .3s;
     }
     .bottom-link a:hover,
     .bottom-link a:active{
-      background:#ffffff;     /* White on click/hover */
+      background:#ffffff;       /* white on click */
       color:#000;
     }
+    footer{
+      font-size:0.85rem;
+      color:#999;
+      text-align:center;
+    }
+    footer a{
+      color:#ffeb3b;
+      text-decoration:none;
+    }
+    footer a:hover{text-decoration:underline;}
   </style>
 </head>
 <body>
 
-<div class="container">
+  <!-- Profile -->
+  <img src="https://i.ibb.co/F45xCN9N/Img2url-bot.jpg" alt="Profile" class="profile-pic">
+  <p class="description">
+    Welcome! I'm <strong>Rudra</strong>, a developer & content creator.<br>
+    Explore my work and join all my channels!
+  </p>
+
+  <!-- 6 Buttons (2 x 3 grid) -->
   <div class="grid">
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-telegram"></i>Button 1</a>
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fab fa-instagram"></i>Button 2</a>
@@ -79,12 +112,17 @@
     <a href="https://t.me/Kenkaneki7678" class="btn"><i class="fas fa-link"></i>Button 6</a>
   </div>
 
+  <!-- Bottom red button -->
   <div class="bottom-link">
     <a href="https://t.me/Kenkaneki7678" target="_blank">
       Join My Telegram Channel
     </a>
   </div>
-</div>
+
+  <!-- Footer -->
+  <footer>
+    Made by <a href="https://t.me/Kenkaneki7678" target="_blank">Rudra</a>
+  </footer>
 
 </body>
 </html>
