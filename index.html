@@ -1,146 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recharge Celebration</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    font-family:'Poppins',sans-serif;
-    background:linear-gradient(135deg,#ff5f6d,#ffc371,#4b6cb7,#182848);
-    background-size:600% 600%;
-    animation:gradient 18s ease infinite;
-    color:#fff;overflow:hidden;
-  }
-  @keyframes gradient{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-  }
-  #loader{
-    position:fixed;top:0;left:0;width:100%;height:100%;
-    background:#111;display:flex;justify-content:center;align-items:center;
-    z-index:999;flex-direction:column;
-  }
-  .spinner{
-    width:70px;height:70px;border:6px solid #444;
-    border-top-color:#ffeb3b;border-radius:50%;
-    animation:spin 1s linear infinite;
-  }
-  @keyframes spin{to{transform:rotate(360deg);}}
-  #loader p{margin-top:1rem;color:#ccc;}
-  .card{
-    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-    max-width:400px;width:90%;
-    padding:2rem 1.5rem;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(10px);
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 0 20px rgba(0,0,0,0.4);
-    transition:opacity 0.8s,transform 0.8s;
-  }
-  .hide{opacity:0;pointer-events:none;}
-  .profile{
-    width:120px;height:120px;border-radius:50%;
-    object-fit:cover;
-    border:3px solid #fff;margin-bottom:1rem;
-    box-shadow:0 0 15px rgba(255,255,255,0.5);
-  }
-  .desc{font-size:1rem;margin-bottom:1.5rem;color:#eee;}
-  .input-wrap{
-    display:flex;align-items:center;
-    background:rgba(255,255,255,0.1);
-    border-radius:10px;margin-bottom:1rem;
-    border:1px solid rgba(255,255,255,0.2);
-    overflow:hidden;
-  }
-  .prefix{
-    padding:0.8rem 1rem;font-weight:600;
-    color:#ffeb3b;background:rgba(0,0,0,0.2);
-    white-space:nowrap;
-  }
-  input{
-    flex:1;border:none;background:transparent;color:#fff;
-    padding:0.8rem;font-size:1rem;outline:none;min-width:0;
-  }
-  button{
-    position:relative;width:100%;padding:0.9rem;font-size:1rem;
-    background:#ff3333;color:#fff;border:none;border-radius:8px;
-    overflow:hidden;cursor:pointer;font-weight:600;
-    transition:transform .2s;
-  }
-  button:active{transform:scale(0.96);}
-  #result{
-    position:absolute;top:0;left:0;width:100%;height:100%;
-    background:#111;display:flex;flex-direction:column;
-    justify-content:center;align-items:center;text-align:center;
-    padding:2rem;opacity:0;pointer-events:none;
-    transition:opacity 0.6s;
-  }
-  #result.show{opacity:1;pointer-events:auto;}
-  #result h1{font-size:2rem;margin-bottom:1rem;color:#ffeb3b;}
-  #result p{font-size:1.2rem;max-width:600px;color:#eee;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recharge Demo | Rudra</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Poppins',sans-serif;
+      height:100vh;
+      background:linear-gradient(135deg,#ff4b1f,#1fddff);
+      background-size:400% 400%;
+      animation:gradient 12s ease infinite;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color:#fff;
+      overflow:hidden;
+    }
+    @keyframes gradient{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    .card{
+      width:90%;
+      max-width:420px;
+      padding:2rem;
+      background:rgba(255,255,255,0.15);
+      backdrop-filter:blur(12px);
+      border-radius:20px;
+      text-align:center;
+      position:relative;
+    }
+    .logo{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      object-fit:cover;
+      margin:-90px auto 1rem;
+      border:4px solid rgba(255,255,255,0.6);
+    }
+    h1{
+      font-size:1.8rem;
+      margin-bottom:0.5rem;
+    }
+    p.desc{
+      font-size:0.95rem;
+      margin-bottom:1.5rem;
+      color:#eee;
+    }
+
+    .input-wrap{
+      display:flex;
+      align-items:center;
+      background:rgba(255,255,255,0.25);
+      border-radius:10px;
+      margin-bottom:1rem;
+      border:1px solid rgba(255,255,255,0.3);
+      overflow:hidden;
+    }
+    .prefix{
+      padding:0.8rem 1rem;
+      font-weight:600;
+      color:#222;
+      background:#fff;
+    }
+    input{
+      flex:1;
+      border:none;
+      background:#fff;
+      color:#222;
+      padding:0.8rem;
+      font-size:1rem;
+      outline:none;
+      min-width:0;
+    }
+
+    button{
+      background:#000;
+      color:#fff;
+      border:none;
+      padding:0.8rem 1.2rem;
+      font-size:1rem;
+      font-weight:500;
+      border-radius:8px;
+      cursor:pointer;
+      transition:all .3s;
+      width:100%;
+    }
+    button:hover{background:#333}
+    button:active{transform:scale(0.96)}
+
+    .message{
+      margin-top:1rem;
+      font-weight:500;
+    }
+    .hidden{display:none}
+
+    /* Result screen */
+    .result{
+      position:absolute;
+      inset:0;
+      background:#fff;
+      color:#333;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      border-radius:20px;
+      text-align:center;
+      padding:2rem;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.5s ease;
+    }
+    .result.show{opacity:1;pointer-events:auto}
+
+    footer{
+      position:absolute;
+      bottom:10px;
+      font-size:0.8rem;
+      opacity:0.8;
+    }
+    footer a{color:#fff;text-decoration:none;font-weight:600}
+  </style>
 </head>
 <body>
 
-<div id="loader">
-  <div class="spinner"></div>
-  <p>Loading...</p>
-</div>
+  <div class="card">
+    <img src="https://i.ibb.co/F45xCN9N/Img2url-bot.jpg" class="logo" alt="Logo">
+    <h1>Recharge Demo</h1>
+    <p class="desc">Enter your Indian mobile number to simulate a recharge (for fun only!)</p>
 
-<div id="mainCard" class="card">
-  <img src="https://i.ibb.co/F45xCN9N/Img2url-bot.jpg" class="profile" alt="profile">
-  <p class="desc">Welcome! Enter your Indian mobile number below to test celebration effect.</p>
-  <div class="input-wrap">
-    <div class="prefix">🇮🇳 +91</div>
-    <input type="tel" id="mobile" placeholder="10 digit number" maxlength="10">
+    <div class="input-wrap">
+      <div class="prefix">+91</div>
+      <input type="tel" id="number" maxlength="10" placeholder="Enter 10 digit mobile number">
+    </div>
+    <button id="submitBtn">Submit</button>
+    <div class="message hidden" id="msg"></div>
+
+    <div class="result" id="resultBox">
+      <h2>🎉 Congratulations!</h2>
+      <p>Your recharge is on its way.<br/>Please wait for 24 hours.</p>
+    </div>
+
+    <footer>
+      Made with ❤️ by <a href="https://instagram.com/eternal.rudra" target="_blank">Rudra</a>
+    </footer>
   </div>
-  <button id="submitBtn">Submit</button>
-</div>
 
-<div id="result">
-  <h1>🎉 Congratulations!</h1>
-  <p>Your number has been submitted successfully.<br>
-  Enjoy the celebration animation!</p>
-</div>
+  <audio id="cheer" src="https://cdn.pixabay.com/audio/2022/03/15/audio_f2b0baf6d7.mp3"></audio>
 
-<audio id="sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_9baf59eced.mp3" preload="auto"></audio>
+  <script>
+    const btn=document.getElementById('submitBtn');
+    const input=document.getElementById('number');
+    const msg=document.getElementById('msg');
+    const result=document.getElementById('resultBox');
+    const cheer=document.getElementById('cheer');
 
-<script>
-  // Loader hide after 3s
-  window.addEventListener('load',()=>{
-    setTimeout(()=>document.getElementById('loader').style.display='none',3000);
-  });
-
-  const btn=document.getElementById('submitBtn');
-  const input=document.getElementById('mobile');
-  const card=document.getElementById('mainCard');
-  const result=document.getElementById('result');
-  const sound=document.getElementById('sound');
-
-  btn.addEventListener('click',()=>{
-    const val=input.value.trim();
-    if(/^[0-9]{10}$/.test(val)){
-      card.classList.add('hide');
-      result.classList.add('show');
-      sound.currentTime=0; sound.play();
-
-      // Fire confetti
-      let duration=4*1000;
-      let end=Date.now()+duration;
-      (function frame(){
-        confetti({particleCount:5,spread:70,origin:{y:0.6}});
-        if(Date.now()<end){requestAnimationFrame(frame);}
-      }());
-    }else{
-      alert("❌ Invalid! Please enter a valid 10 digit number.");
-    }
-  });
-</script>
+    btn.addEventListener('click',()=>{
+      const val=input.value.trim();
+      msg.classList.remove('hidden');
+      if(/^[0-9]{10}$/.test(val)){
+        msg.textContent='Checking...';
+        msg.style.color='#fff';
+        setTimeout(()=>{
+          result.classList.add('show');
+          cheer.play();
+          confetti({particleCount:150,spread:70,origin:{y:0.6}});
+        },800);
+      }else{
+        msg.textContent='❌ Please enter a valid 10 digit Indian number.';
+        msg.style.color='yellow';
+      }
+    });
+  </script>
 </body>
 </html>
