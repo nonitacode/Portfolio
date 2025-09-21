@@ -3,19 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mobile Recharge Validation</title>
+  <title>Mobile Validation Demo</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body{
       margin:0;
       font-family:'Poppins',sans-serif;
-      background:#0e0e0e;
-      color:#fff;
+      min-height:100vh;
       display:flex;
       flex-direction:column;
       align-items:center;
-      min-height:100vh;
+      justify-content:center;
+      text-align:center;
+      color:#fff;
+      background:linear-gradient(135deg,#141414,#1f1f1f,#141414);
+      background-size:400% 400%;
+      animation:gradient 12s ease infinite;
       padding:2rem 1rem;
+    }
+    @keyframes gradient{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
     }
     .profile-pic{
       width:140px;
@@ -28,24 +37,22 @@
     }
     .description{
       font-size:1rem;
-      text-align:center;
       max-width:500px;
-      color:#ccc;
       margin-bottom:2rem;
+      color:#e0e0e0;
     }
     .form-box{
       background:#1b1b1b;
       padding:2rem 1.5rem;
-      border-radius:14px;
+      border-radius:16px;
       max-width:420px;
       width:100%;
-      box-shadow:0 0 15px rgba(255,255,255,0.05);
+      box-shadow:0 0 25px rgba(0,0,0,0.4);
     }
     .country{
-      text-align:center;
+      font-size:1.3rem;
       font-weight:600;
-      font-size:1.2rem;
-      margin-bottom:1rem;
+      margin-bottom:1.2rem;
     }
     .input-wrapper{
       display:flex;
@@ -54,14 +61,18 @@
       border:1px solid #444;
       border-radius:8px;
       overflow:hidden;
-      margin-bottom:1rem;
+      margin-bottom:1.2rem;
+      transition:border .3s;
+    }
+    .input-wrapper:focus-within{
+      border:1px solid #ff3333;
+      box-shadow:0 0 8px rgba(255,51,51,0.4);
     }
     .prefix{
       background:#333;
       padding:0.8rem 1rem;
       font-weight:600;
       color:#ffeb3b;
-      white-space:nowrap;
     }
     input{
       flex:1;
@@ -82,15 +93,16 @@
       border:none;
       border-radius:8px;
       cursor:pointer;
-      transition:background .3s;
+      transition:transform .2s,background .3s;
     }
-    button:hover{background:#fff;color:#000;}
+    button:hover{transform:scale(1.05);}
+    button:active{transform:scale(0.95);}
     .message{
       margin-top:1rem;
-      padding:0.6rem;
-      text-align:center;
+      padding:0.7rem;
       border-radius:6px;
       display:none;
+      font-size:0.95rem;
       animation:fade .4s ease;
     }
     .error{background:#ff4d4d;color:#fff;}
@@ -102,10 +114,17 @@
     footer{
       margin-top:2rem;
       font-size:0.85rem;
-      color:#999;
+      color:#bbb;
+      opacity:0;
+      animation:fadein 2s ease forwards;
+      animation-delay:1s;
     }
     footer a{color:#ffeb3b;text-decoration:none;}
     footer a:hover{text-decoration:underline;}
+    @keyframes fadein{
+      from{opacity:0;transform:translateY(20px);}
+      to{opacity:1;transform:translateY(0);}
+    }
   </style>
 </head>
 <body>
@@ -113,14 +132,14 @@
   <img src="https://i.ibb.co/F45xCN9N/Img2url-bot.jpg" alt="Profile" class="profile-pic">
   <p class="description">
     Welcome! I'm <strong>Rudra</strong>, a developer & content creator.<br>
-    Enter your Indian mobile number for demo recharge.
+    Enter your Indian mobile number for demo validation.
   </p>
 
   <div class="form-box">
     <div class="country">🇮🇳 India</div>
     <div class="input-wrapper">
       <div class="prefix">+91</div>
-      <input type="tel" id="mobile" placeholder="Enter 10 digit number" maxlength="10">
+      <input type="tel" id="mobile" placeholder="10 digit number" maxlength="10">
     </div>
     <button id="submit">Submit</button>
     <div id="msg" class="message"></div>
@@ -139,11 +158,11 @@
       const value = mobileInput.value.trim();
 
       if(!/^[0-9]{10}$/.test(value)){
-        msg.textContent = "⚠️ Number galat hai! 10 digit ka valid Indian number dijiye.";
+        msg.innerHTML = "❌ <strong>Number galat hai!</strong> 10 digit ka valid Indian number dijiye.";
         msg.className = "message error";
         msg.style.display = "block";
       } else {
-        msg.textContent = "🎉 Congratulations! Wait for 24 hours, your recharge will be done.";
+        msg.innerHTML = "✅ <strong>Congratulations!</strong> Wait for 24 hours, your recharge will be done.";
         msg.className = "message success";
         msg.style.display = "block";
       }
